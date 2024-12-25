@@ -27,7 +27,7 @@ apis:
       - type: Documentation
         url: https://api.edmunds.com/
       - type: OpenAPI
-        url: properties/agrio-openapi-original.yml
+        url: openapiagrio-openapi-original.yml
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
