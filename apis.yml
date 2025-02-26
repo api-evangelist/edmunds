@@ -3,9 +3,9 @@ url: >-
 apis:
   - name: Edmunds
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://api.edmunds.com/
+    humanURL: https://developer.edmunds.com/dealership_api_program.html
     properties:
-      - url: https://api.edmunds.com/
+      - url: https://developer.edmunds.com/dealership_api_program.html
         type: Documentation
       - url: openapi/agrio-openapi-original.yml
         type: OpenAPI
