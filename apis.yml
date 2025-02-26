@@ -1,28 +1,41 @@
+aid: edmunds
 url: >-
   https://example.com/apis/edmunds-developer-network-welcome-to-the-edmunds-api-edmunds-developer-portal.yml
 apis:
-  - name: Edmunds Dealership API
+  - aid: edmunds:edmunds
+    name: Edmunds Dealership API
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://developer.edmunds.com/dealership_api_program.html
     properties:
       - url: https://developer.edmunds.com/dealership_api_program.html
         type: Documentation
     description: >-
-      To access Edmunds content, REST APIs are used to retrieve a JSON data
-      object that contains a rich set of content elements that can be parsed and
-      integrated into your website. 
-    aid: edmunds:edmunds
-  - name: Edmunds API
+      The Edmunds Dealership API is a tool that provides real-time access to
+      data on cars for sale at dealerships across the country. By connecting to
+      the API, users can search for specific makes and models, view pricing
+      information, and even schedule test drives directly through the platform.
+      This information is continuously updated to reflect the current inventory
+      available at each dealership, giving users the most accurate and
+      up-to-date information possible. Overall, the Edmunds Dealership API
+      streamlines the car buying process by making it easier for users to find
+      the perfect vehicle at a dealership near them.
+  - aid: edmunds:edmunds
+    name: Edmunds API
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://developer.edmunds.com/api-documentation/overview/
     properties:
       - url: https://developer.edmunds.com/api-documentation/overview/
         type: Documentation
     description: >-
-      To access Edmunds content, REST APIs are used to retrieve a JSON data
-      object that contains a rich set of content elements that can be parsed and
-      integrated into your website. 
-    aid: edmunds:edmunds
+      Edmunds API is a robust software interface that provides access to a vast
+      database of automotive information and data. With this API, users can
+      access details on car specifications, pricing, reviews, and inventory from
+      Edmunds' comprehensive database of vehicles. This API allows developers to
+      integrate this information into their own applications and websites,
+      making it easier for consumers to research and compare different car
+      models. Whether it's finding the best deal on a new car or researching the
+      latest features and technology, the Edmunds API is a valuable tool for
+      anyone in the automotive industry.
 name: Edmunds
 tags:
   - Automobiles
@@ -46,4 +59,3 @@ maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
 specificationVersion: '0.18'
-aid: edmunds
