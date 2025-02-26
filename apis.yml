@@ -59,3 +59,30 @@ maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
 specificationVersion: '0.18'
+common:
+  - name: >-
+      Edmunds Developer Network - Welcome to the Edmunds API | Edmunds Developer
+      Portal
+    description: 'null'
+    url: https://developer.edmunds.com/
+    type: Portal
+  - name: the edmunds API terms of service | Edmunds Developer Portal
+    description: 'null'
+    url: https://developer.edmunds.com/terms_of_service.html
+    type: TermsOfService
+  - name: API Branding guide | Edmunds Developer Portal
+    description: 'null'
+    url: https://developer.edmunds.com/api_branding_guide.html
+    type: Branding
+  - name: FAQ | Edmunds Developer Portal
+    description: 'null'
+    url: https://developer.edmunds.com/faq.html
+    type: FAQ
+  - name: Contact Us | Edmunds Developer Portal
+    description: 'null'
+    url: https://developer.edmunds.com/contact_us.html
+    type: Contact
+  - name: API Overview
+    description: 'null'
+    url: https://developer.edmunds.com/api-documentation/overview/#sec-9
+    type: SDKs
