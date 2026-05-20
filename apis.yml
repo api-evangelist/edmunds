@@ -51,6 +51,10 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: GitHubOrganization
+    url: https://github.com/edmunds
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/edmunds-com
   - name: >-
       Edmunds Developer Network - Welcome to the Edmunds API | Edmunds Developer
       Portal
