@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edmunds Vehicle API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicle",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List vehicle makes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.edmunds.com/api/vehicle/v3/makes",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List vehicle makes"
+        },
+        {
+          "info": {
+            "name": "Count vehicle makes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.edmunds.com/api/vehicle/v3/makes/count"
+          },
+          "docs": "Count vehicle makes"
+        },
+        {
+          "info": {
+            "name": "List models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.edmunds.com/api/vehicle/v3/models",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List models"
+        },
+        {
+          "info": {
+            "name": "List makes (v2) with model year data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.edmunds.com/api/vehicle/v2/makes",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List makes (v2) with model year data"
+        },
+        {
+          "info": {
+            "name": "List models for a make (v2)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.edmunds.com/api/vehicle/v2/:makeNiceName/models",
+            "params": [
+              {
+                "name": "makeNiceName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List models for a make (v2)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
