@@ -5,7 +5,7 @@ apis:
   - aid: edmunds:edmunds
     name: Edmunds Dealership API
     image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://developer.edmunds.com/dealership_api_program.html
     properties:
       - url: https://developer.edmunds.com/dealership_api_program.html
@@ -20,7 +20,7 @@ apis:
   - aid: edmunds:edmunds
     name: Edmunds API
     image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://developer.edmunds.com/api-documentation/overview/
     properties:
       - url: https://developer.edmunds.com/api-documentation/overview/
