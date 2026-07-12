@@ -51,6 +51,10 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: DomainSecurity
+    url: security/edmunds-domain-security.yml
+  - type: Authentication
+    url: authentication/edmunds-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/edmunds
   - type: LinkedIn
