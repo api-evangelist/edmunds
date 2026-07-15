@@ -51,6 +51,8 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: AgenticAccess
+    url: agentic-access/edmunds-agentic-access.yml
   - type: DomainSecurity
     url: security/edmunds-domain-security.yml
   - type: Authentication
