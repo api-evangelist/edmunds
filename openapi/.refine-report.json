@@ -1,0 +1,14 @@
+{
+  "provider": "edmunds",
+  "sources": [
+    "edmunds-vehicle-api-openapi.yml"
+  ],
+  "outputs": [
+    "edmunds-vehicle-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

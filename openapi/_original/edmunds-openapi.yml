@@ -1,0 +1,132 @@
+openapi: 3.1.0
+info:
+  title: Edmunds Vehicle API
+  version: "3.0"
+  description: >-
+    Edmunds Vehicle API provides programmatic access to vehicle make, model,
+    style, pricing, and dealership inventory data. Authentication is via an
+    api_key query parameter.
+  contact:
+    name: Edmunds Developer Network
+    url: https://developer.edmunds.com/
+servers:
+  - url: https://api.edmunds.com
+    description: Production
+security:
+  - ApiKeyAuth: []
+paths:
+  /api/vehicle/v3/makes:
+    get:
+      summary: List vehicle makes
+      operationId: listMakes
+      tags: [Vehicle]
+      parameters:
+        - in: query
+          name: state
+          schema:
+            type: string
+            enum: [new, used, future]
+        - in: query
+          name: year
+          schema:
+            type: integer
+        - in: query
+          name: view
+          schema:
+            type: string
+            enum: [basic, full]
+      responses:
+        '200':
+          description: Makes list
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/vehicle/v3/makes/count:
+    get:
+      summary: Count vehicle makes
+      operationId: countMakes
+      tags: [Vehicle]
+      responses:
+        '200':
+          description: Count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  makesCount:
+                    type: integer
+  /api/vehicle/v3/models:
+    get:
+      summary: List models
+      operationId: listModels
+      tags: [Vehicle]
+      parameters:
+        - in: query
+          name: state
+          schema:
+            type: string
+        - in: query
+          name: year
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Models list
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/vehicle/v2/makes:
+    get:
+      summary: List makes (v2) with model year data
+      operationId: listMakesV2
+      tags: [Vehicle]
+      parameters:
+        - in: query
+          name: state
+          schema:
+            type: string
+            enum: [new, used, future]
+      responses:
+        '200':
+          description: Makes list with model years
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/vehicle/v2/{makeNiceName}/models:
+    get:
+      summary: List models for a make (v2)
+      operationId: listModelsForMake
+      tags: [Vehicle]
+      parameters:
+        - in: path
+          name: makeNiceName
+          required: true
+          schema:
+            type: string
+            example: lexus
+        - in: query
+          name: state
+          schema:
+            type: string
+            enum: [new, used, future]
+        - in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Models list
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
