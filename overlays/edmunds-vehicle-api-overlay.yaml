@@ -1,0 +1,68 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the Edmunds Vehicle API
+  version: 1.0.0
+extends: ../openapi/edmunds-vehicle-api-openapi.yml
+x-provenance:
+  generated: '2026-09-06'
+  method: generated
+  source: >-
+    Enhancements API Evangelist adds on top of openapi/edmunds-vehicle-api-openapi.yml.
+    That spec is itself a per-tag split of openapi/_original/edmunds-openapi.yml, which the
+    repository history records as "a best-effort OpenAPI 3.1 spec generated from
+    documentation" — it was written from the Edmunds developer portal, not fetched from
+    Edmunds. Both the provenance correction and these enhancements are expressed here rather
+    than by editing either file.
+actions:
+  - target: $.info
+    description: State the real provenance and the access status of this surface.
+    update:
+      x-api-evangelist:
+        provenance: generated-from-documentation
+        generated_from:
+          - https://developer.edmunds.com/api-documentation/overview/
+          - https://developer.edmunds.com/api-documentation/vehicle/
+          - https://developer.edmunds.com/api-documentation/vehicle/spec_make/v3/
+        note: >-
+          Edmunds publishes no OpenAPI for the Vehicle API. Every path and parameter here
+          was transcribed from Edmunds' own published examples and endpoint tables. It is a
+          faithful reading of the documentation, not a document Edmunds serves, and it
+          covers a small fraction of the documented surface.
+        coverage: >-
+          5 of the roughly 20 documented Vehicle API resources; the Editorial, Dealer and
+          Media APIs are not represented at all.
+        access: >-
+          Gated. Returns HTTP 401 "Developer Inactive" without a partner-issued key.
+  - target: $.info
+    description: Add the contact and terms links the generated document omits.
+    update:
+      contact:
+        name: Edmunds Developer Network
+        url: https://developer.edmunds.com/contact_us.html
+      termsOfService: https://developer.edmunds.com/terms_of_service.html
+  - target: $.paths[*][*]
+    description: >-
+      Record the response-format and JSONP query parameters that apply to every operation
+      on this API but appear in no operation's parameter list.
+    update:
+      x-api-evangelist-common-parameters:
+        - name: fmt
+          in: query
+          description: Response format. json is the default; xml support is partial and endpoint-specific.
+          schema:
+            type: string
+            enum:
+              - json
+              - xml
+        - name: callback
+          in: query
+          description: JSONP callback function name.
+          schema:
+            type: string
+  - target: $.paths[*][*].responses['200']
+    description: Note the absent error declarations.
+    update:
+      x-api-evangelist-note: >-
+        No error responses are declared. Edmunds documents 400, 401, 403, 404, 502, 503 and
+        504 with a fixed {status, errorType, message, moreInfoUrl} envelope — see
+        errors/edmunds-problem-types.yml.

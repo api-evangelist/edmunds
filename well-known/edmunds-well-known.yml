@@ -1,0 +1,65 @@
+generated: '2026-09-06'
+method: probed
+source: live unauthenticated GET of /.well-known/* on every host this record knows
+note: >-
+  Five discovery paths were probed on each of the three Edmunds hosts (the registrable
+  domain's www, the developer/docs host, and the API host named by every OpenAPI
+  servers[] block). Exactly one document is served: api.edmunds.com returns a real
+  OpenAI plugin manifest at /.well-known/ai-plugin.json (HTTP 200, application/json,
+  Last-Modified 2023-07-26). It points at https://api.edmunds.com/openapi.yaml, which
+  is also served and is saved to openapi/_original/edmunds-cars-openapi.yaml. No
+  security.txt, no OpenID/OAuth metadata and no api-catalog is served anywhere.
+  www.edmunds.com answers 403 to our crawler on every path from its own edge (a
+  datacenter-IP block, not a per-path result); developer.edmunds.com is an S3-backed
+  static site returning a genuine NoSuchKey 404 for each path.
+hosts:
+  - host: api.edmunds.com
+    documents:
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        file: edmunds-ai-plugin.json
+        content_type: application/json
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: developer.edmunds.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: www.edmunds.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403

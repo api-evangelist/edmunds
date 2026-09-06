@@ -1,0 +1,128 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  openapi/_original/edmunds-cars-openapi.yaml,
+  openapi/edmunds-vehicle-api-openapi.yml,
+  https://developer.edmunds.com/api-documentation/overview/,
+  https://api.edmunds.com/.well-known/ai-plugin.json, and live probes of api.edmunds.com
+provider: Edmunds
+providerId: edmunds
+note: >-
+  Assertions are derived from the two captured contracts and from the provider's own prose
+  reference, then checked against live responses where possible. Every false below is a
+  measured absence, not an unchecked box.
+conformance:
+  - id: openapi
+    conforms: true
+    version: 3.0.1
+    evidence: >-
+      https://api.edmunds.com/openapi.yaml — HTTP 200, parses as OpenAPI 3.0.1, saved
+      verbatim to openapi/_original/edmunds-cars-openapi.yaml
+  - id: rest
+    conforms: true
+    evidence: https://developer.edmunds.com/api-documentation/overview/
+  - id: cors
+    conforms: true
+    evidence: >-
+      https://developer.edmunds.com/api-documentation/overview/ — "The API also supports
+      Cross-Origin Resource Sharing (CORS) which allows cross-domain requests to be made by
+      JavaScript on a web page."
+  - id: jsonp
+    conforms: true
+    evidence: >-
+      https://developer.edmunds.com/api-documentation/overview/ — "For JSONP support, you
+      will need to add callback= to the query string"
+  - id: pagination
+    conforms: true
+    style: page-number
+    evidence: >-
+      pageNum/pageSize in https://developer.edmunds.com/api-documentation/vehicle/;
+      pagenum/pagesize declared required in openapi/_original/edmunds-cars-openapi.yaml
+  - id: openai-plugin-manifest
+    conforms: true
+    version: v1
+    evidence: >-
+      https://api.edmunds.com/.well-known/ai-plugin.json — HTTP 200, schema_version "v1",
+      valid manifest naming the model as edmunds_cars
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      https://developer.edmunds.com/api-documentation/overview/ publishes a vendor envelope
+      {status, errorType, message, moreInfoUrl} returned as application/json, not
+      application/problem+json. See errors/edmunds-problem-types.yml.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme in either contract; /.well-known/oauth-authorization-server
+      returns 403 on api.edmunds.com and 404 on developer.edmunds.com. Authentication is an
+      api_key query parameter.
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration — 403 on api.edmunds.com, 404 on developer.edmunds.com
+  - id: idempotency
+    conforms: false
+    applicable: false
+    evidence: >-
+      Read-only surface — every documented operation is a GET, so there is no mutating
+      call for an Idempotency-Key to protect. See conventions/edmunds-conventions.yml.
+  - id: json-api
+    conforms: false
+    evidence: Responses are plain vendor JSON; no JSON:API media type or document structure.
+  - id: odata
+    conforms: false
+    evidence: No $metadata surface and no OData query options; filtering is flat query parameters.
+  - id: scim
+    conforms: false
+    evidence: No identity-provisioning surface and no urn:ietf:params:scim schema URN anywhere.
+  - id: asyncapi
+    conforms: false
+    applicable: false
+    evidence: >-
+      No event, streaming or webhook surface is documented or served. See
+      asyncapi (absent) and mcp/edmunds-mcp.yml.
+other_contract_shapes_probed:
+  note: >-
+    Probed so the absences are measured rather than assumed. api.edmunds.com answers 403 to
+    its edge for any unrouted path, so a 403 there means "no such route", not "withheld".
+  probes:
+    - url: https://api.edmunds.com/?wsdl
+      status: 403
+    - url: https://api.edmunds.com/services?wsdl
+      status: 403
+    - url: https://api.edmunds.com/asyncapi.yaml
+      status: 403
+    - url: https://api.edmunds.com/asyncapi.json
+      status: 403
+    - url: https://developer.edmunds.com/asyncapi.yaml
+      status: 404
+    - url: https://api.edmunds.com/graphql
+      status: 403
+    - url: https://api.edmunds.com/mcp
+      status: 403
+  finding: >-
+    No SOAP/WSDL, no AsyncAPI, no GraphQL and no MCP surface. No .proto is published in
+    either the edmunds or EdmundsAPI GitHub organisation. REST is the only contract shape
+    Edmunds ships.
+domain_standards:
+  searched:
+    - name: NADA / STAR (Standards for Technology in Automotive Retail) DMS XML payloads
+      found: false
+    - name: OpenTrack / Open Dealer Exchange
+      found: false
+    - name: ADF/XML (Auto-lead Data Format) lead payloads
+      found: false
+    - name: ISO 3779 / NHTSA vPIC VIN decoding schema
+      found: false
+      note: >-
+        Edmunds ships VIN decoding endpoints (api/vehicle/v1|v2/vins, squishvin) but
+        publishes its own response shape; it does not declare conformance to the NHTSA vPIC
+        schema or to any interchange standard for the decoded result.
+  finding: >-
+    None. Edmunds' automotive-retail market does have interchange standards — STAR/ADF for
+    dealer lead and DMS messaging — but Edmunds' published contract declares none of them,
+    and its own datasets (TMV, TCO, editorial reviews, scorecards) are proprietary by
+    design. Recorded as searched-and-absent. This is reward-only in the rubric: no standard
+    is asserted here because none is declared, and no penalty is implied.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

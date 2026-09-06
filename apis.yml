@@ -1,11 +1,11 @@
 aid: edmunds
-url: >-
-  https://example.com/apis/edmunds-developer-network-welcome-to-the-edmunds-api-edmunds-developer-portal.yml
+url: https://raw.githubusercontent.com/api-evangelist/edmunds/main/apis.yml
 apis:
 - aid: edmunds:edmunds
   name: Edmunds Dealership API
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.edmunds.com/dealership_api_program.html
+  baseURL: https://api.edmunds.com
   properties:
   - url: https://developer.edmunds.com/dealership_api_program.html
     type: Documentation
@@ -19,6 +19,7 @@ apis:
   name: Edmunds API
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.edmunds.com/api-documentation/overview/
+  baseURL: https://api.edmunds.com
   properties:
   - url: https://developer.edmunds.com/api-documentation/overview/
     type: Documentation
@@ -30,18 +31,62 @@ apis:
     car models.
 - aid: edmunds:edmunds-vehicle-api
   name: Edmunds Vehicle API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   description: The Vehicle API from Edmunds — 5 operation(s) for vehicle.
-  humanURL: https://developer.edmunds.com/dealership_api_program.html
+  humanURL: https://developer.edmunds.com/api-documentation/vehicle/
+  baseURL: https://api.edmunds.com
   tags:
   - Vehicle
   properties:
   - type: OpenAPI
     url: openapi/edmunds-vehicle-api-openapi.yml
+  - type: Overlay
+    url: overlays/edmunds-vehicle-api-overlay.yaml
+  - type: Documentation
+    url: https://developer.edmunds.com/api-documentation/vehicle/
+- aid: edmunds:edmunds-cars-api
+  name: Edmunds Cars API
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  description: >-
+    The only machine-readable contract Edmunds serves. An OpenAPI 3.0.1 document published
+    at https://api.edmunds.com/openapi.yaml and pointed at by Edmunds' own OpenAI plugin
+    manifest at /.well-known/ai-plugin.json. Two read operations: getExpertReview returns
+    the Edmunds editorial review, scorecard, pros and cons, safety and features for a
+    make/model/year; findInventory returns curated new, used and CPO listings near a US zip
+    code across roughly forty filter facets, with an Edmunds Suggested Price on each result.
+    Both operations return HTTP 401 "Developer Inactive" without a partner-issued key.
+  humanURL: https://developer.edmunds.com/api-documentation/overview/
+  baseURL: https://api.edmunds.com
+  tags:
+  - Cars
+  - Vehicles
+  - Reviews
+  - Inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/edmunds-cars-openapi.yml
+  - type: OpenAPI
+    url: openapi/_original/edmunds-cars-openapi.yaml
+  - type: Overlay
+    url: overlays/edmunds-cars-overlay.yaml
+  - type: MCPServer
+    url: mcp/edmunds-mcp.yml
+  - type: DataModel
+    url: data-model/edmunds-data-model.yml
+  - type: ErrorCatalog
+    url: errors/edmunds-problem-types.yml
+  - type: Documentation
+    url: https://developer.edmunds.com/api-documentation/overview/
 name: Edmunds
 tags:
   - Automobiles
   - Cars
   - Vehicles
+  - Vehicle Data
+  - Dealerships
+  - Reviews
+  - Pricing
+  - Automotive
 deliveryModel:
   model: saas
   open_source: false
@@ -71,7 +116,7 @@ accessModel:
 image: >-
   https://kinlane-productions2.s3.amazonaws.com/apis-json-icons/edmunds-developer-network-welcome-to-the-edmunds-api-edmunds-developer-portal.png
 created: '2024-07-11T00:00:00.000Z'
-modified: '2026-04-28'
+modified: '2026-09-06'
 description: >-
   Edmunds is a popular automotive resource website that provides consumers with valuable
   information and tools to help them make informed decisions about buying and selling
@@ -82,6 +127,8 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.23'
 common:
+  - type: Website
+    url: https://www.edmunds.com/
   - type: AgenticAccess
     url: agentic-access/edmunds-agentic-access.yml
   - type: DomainSecurity
@@ -92,29 +139,100 @@ common:
     url: https://github.com/edmunds
   - type: LinkedIn
     url: https://www.linkedin.com/company/edmunds-com
-  - name: >-
-      Edmunds Developer Network - Welcome to the Edmunds API | Edmunds Developer
-      Portal
-    description: 'null'
+  - name: Edmunds Developer Network
+    description: >-
+      The Edmunds developer portal. Still served and readable, but it fronts a closed
+      program: the home page links the partner and dealership tracks and the FAQ explains
+      that the open API program was retired.
     url: https://developer.edmunds.com/
     type: Portal
-  - name: the edmunds API terms of service | Edmunds Developer Portal
-    description: 'null'
+  - name: The Edmunds API Terms of Service
+    description: >-
+      The API agreement — the limited, non-exclusive, revocable licence over Edmunds
+      Materials, the reservation of rights, and the attribution obligations.
     url: https://developer.edmunds.com/terms_of_service.html
     type: TermsOfService
-  - name: API Branding guide | Edmunds Developer Portal
-    description: 'null'
+  - name: API Branding Guide
+    description: >-
+      How Edmunds marks, links and logos must be displayed by any application consuming the
+      API.
     url: https://developer.edmunds.com/api_branding_guide.html
-    type: Branding
-  - name: FAQ | Edmunds Developer Portal
-    description: 'null'
+    type: Documentation
+  - name: Edmunds Developer FAQ
+    description: >-
+      The retirement notice in question-and-answer form: why the open API program was
+      retired, that non-partner keys were disabled effective 2018-02-15, that no new
+      applicants are accepted, and that there is no fee-for-service tier.
     url: https://developer.edmunds.com/faq.html
     type: FAQ
   - name: Contact Us | Edmunds Developer Portal
-    description: 'null'
+    description: The developer-portal contact form.
     url: https://developer.edmunds.com/contact_us.html
     type: Contact
-  - name: API Overview
-    description: 'null'
+  - name: SDKs and Code Samples
+    description: >-
+      The "SDKs and Code Samples" section of the API overview, naming the first-party
+      JavaScript and Python SDKs. Both repositories it links under github.com/EdmundsAPI
+      now return 404 — see packages/edmunds-packages.yml.
     url: https://developer.edmunds.com/api-documentation/overview/#sec-9
     type: SDKs
+  - type: Packages
+    url: packages/edmunds-packages.yml
+  - name: Edmunds first-party client libraries
+    description: >-
+      Two first-party SDKs Edmunds names in its own documentation — a Python SDK surviving
+      on PyPI as a single 2014 release published from api@edmunds.com, and a JavaScript SDK
+      in the company GitHub org last pushed in 2011. Both repositories the docs link to
+      under github.com/EdmundsAPI now return 404.
+    url: packages/edmunds-packages.yml
+    type: SDKs
+  - type: WellKnown
+    url: well-known/edmunds-well-known.yml
+  - name: Edmunds Cars plugin manifest
+    description: >-
+      The OpenAI plugin manifest Edmunds serves at
+      https://api.edmunds.com/.well-known/ai-plugin.json (HTTP 200), saved verbatim. It is
+      what led to the only OpenAPI Edmunds actually publishes.
+    url: well-known/edmunds-ai-plugin.json
+    type: OpenAIPluginManifest
+  - type: LLMsTxt
+    url: llms/edmunds-llms.txt
+  - type: Conventions
+    url: conventions/edmunds-conventions.yml
+  - type: Conformance
+    url: conformance/edmunds-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/edmunds-lifecycle.yml
+  - name: Edmunds open API program retirement notice
+    description: >-
+      Edmunds' developer FAQ is its deprecation policy: the open API program was retired and
+      non-partner keys were disabled effective 2018-02-15, with no new applicants accepted
+      then or expected in future. No RFC 8594 Sunset or Deprecation headers are published.
+    url: lifecycle/edmunds-lifecycle.yml
+    type: Deprecation
+  - type: AgentSkill
+    url: skills/_index.yml
+  - name: The Edmunds Tech Blog
+    description: Edmunds' engineering blog.
+    url: https://technology.edmunds.com/
+    type: Blog
+  - name: Api documentation
+    description: The Edmunds API reference — overview, core concepts, and the Vehicle, Editorial, Dealer and Media resources.
+    url: https://developer.edmunds.com/api-documentation/overview/
+    type: APIReference
+  - name: Contact Us | Edmunds Developer Portal
+    description: The only support route Edmunds publishes for the API; partners are routed through an Edmunds Account Executive.
+    url: https://developer.edmunds.com/contact_us.html
+    type: Support
+  - name: Special Requirements | Edmunds Developer Portal
+    description: >-
+      Binding display, attribution and refresh obligations attached to visitor reviews,
+      editorial articles, TCO and TMV data returned by the API.
+    url: https://developer.edmunds.com/special_requirements.html
+    type: Documentation
+
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v3

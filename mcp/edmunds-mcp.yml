@@ -1,0 +1,116 @@
+generated: '2026-09-06'
+method: derived
+status: candidate
+source: >-
+  Derived from openapi/_original/edmunds-cars-openapi.yaml after searching for a published
+  server: no MCP server is offered by Edmunds.
+provider: Edmunds
+providerId: edmunds
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+  note: >-
+    Nobody ships a server. This is a candidate tool list we derived from Edmunds' own live
+    OpenAPI; there is no endpoint an agent can call and no package a human can install, and
+    no endpoint URL has been invented here.
+search:
+  probed:
+    - url: https://api.edmunds.com/mcp
+      method: POST tools/list
+      status: 403
+    - url: https://api.edmunds.com/aiplugin/mcp
+      method: POST tools/list
+      status: 403
+    - url: https://api.edmunds.com/sse
+      status: 403
+    - url: https://api.edmunds.com/.well-known/mcp.json
+      status: 403
+    - url: https://mcp.edmunds.com/mcp
+      status: null
+      finding: hostname does not resolve
+  registries: >-
+    No Edmunds MCP server found on npm, PyPI or in the EdmundsAPI / edmunds GitHub
+    organisations. The EdmundsAPI org has one surviving public repository and it is a blog.
+  finding: >-
+    No MCP server, hosted or local. Edmunds' only agent-facing surface is the 2023-era
+    OpenAI plugin manifest still served at /.well-known/ai-plugin.json — a predecessor
+    format, not MCP — and even that surface returns 401 "Developer Inactive" to any caller
+    without a partner key.
+tools:
+  - name: get_expert_review
+    description: >-
+      Get the Edmunds expert review for a vehicle by make, model and year, including the
+      review summary, pros and cons, scorecard ratings, safety information, features and
+      specs, and a link back to edmunds.com.
+    rest:
+      operationId: getExpertReview
+      method: get
+      path: /aiplugin/editorial/v3/makes/{make}/models/{model}/years/{year}/expertcontent
+    inputSchema:
+      type: object
+      properties:
+        make:
+          type: string
+          description: The lower case make of the vehicle.
+        model:
+          type: string
+          description: The lower case model of the vehicle.
+        year:
+          type: integer
+          description: The year of the vehicle. From 1990 to the current year.
+      required:
+        - make
+        - model
+        - year
+    consequence: read
+  - name: find_inventory
+    description: >-
+      Given a zipcode and optional search criteria, find new, used and CPO vehicles listed
+      near that location. Not an exhaustive search; the response carries a totalNumber of
+      matches.
+    rest:
+      operationId: findInventory
+      method: get
+      path: /aiplugin/curated-inventory/v1
+    inputSchema:
+      type: object
+      properties:
+        zip:
+          type: string
+          description: The zip to search in.
+        radius:
+          type: integer
+          description: Search radius in miles from the geographic centre of the region.
+        inventoryType:
+          type: string
+          description: Comma-separated list of inventory types. Possible values are NEW, USED, CPO.
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: string
+        pagenum:
+          type: integer
+          description: Page number for pagination. Always set this to 1 by default.
+        pagesize:
+          type: integer
+          description: Limits the number of items on the page. Always set this to 3 by default.
+      required:
+        - zip
+        - pagenum
+        - pagesize
+    consequence: read
+    note: >-
+      The published operation accepts 37 further optional filter parameters (body type,
+      colours, drivetrain, engine type, features, payment, deal quality, history). The full
+      set is in openapi/_original/edmunds-cars-openapi.yaml; only the required parameters
+      and the primary facets are reproduced here.
+tool_count: 2
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,184 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  openapi/_original/edmunds-cars-openapi.yaml,
+  openapi/edmunds-vehicle-api-openapi.yml,
+  https://developer.edmunds.com/api-documentation/overview/ (Data Hierarchy),
+  https://developer.edmunds.com/api-documentation/vehicle/,
+  https://developer.edmunds.com/dealership_api_program.html
+provider: Edmunds
+providerId: edmunds
+summary: >-
+  Edmunds' data model is a single five-level vehicle taxonomy that the provider documents
+  explicitly — Make to Model to Model Year to Trim to Style — with everything else hanging
+  off two identifiers it generates: the Model Year ID and the Style ID. The provider states
+  outright that most endpoints require one of those two IDs, which makes them the join keys
+  of the whole API. Inventory listings key off VIN instead and reference a dealer.
+identifiers:
+  - name: modelYearId
+    entity: ModelYear
+    type: integer
+    example: 100538949
+    note: >-
+      Returned as the id field on a model-year object. Required by the maintenance, TCO and
+      several spec endpoints.
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - name: styleId
+    entity: Style
+    type: integer
+    example: 101286113
+    note: >-
+      Returned as the id field on a style object. Required by TMV, equipment, colours and
+      options endpoints.
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - name: niceName
+    entity: Make, Model, Trim
+    type: string
+    example: lexus, mercedes-benz, amg-gt, camry
+    note: >-
+      A lower-case slug used as a path segment and as a filter value. The dealership program
+      page tells integrators to look up the correct niceName rather than guess it.
+    source: https://developer.edmunds.com/dealership_api_program.html
+  - name: vin
+    entity: InventoryListing
+    type: string
+    length: 17
+    note: Also decoded through the VIN and Squish VIN spec endpoints. Data coverage starts at model year 1990.
+entities:
+  - name: Make
+    description: The manufacturer, or the operating unit where a manufacturer has more than one.
+    relationships:
+      - type: has_many
+        target: Model
+        via: makeNiceId
+  - name: Model
+    description: A specific vehicle brand identified by a name or number.
+    relationships:
+      - type: belongs_to
+        target: Make
+        via: makeNiceId
+      - type: has_many
+        target: ModelYear
+        via: modelNiceId
+  - name: ModelYear
+    description: The calendar-year designation the manufacturer assigns to an annual version of a model.
+    id: modelYearId
+    relationships:
+      - type: belongs_to
+        target: Model
+      - type: has_many
+        target: Style
+        via: modelYearId
+      - type: has_one
+        target: MaintenanceSchedule
+        via: modelYearId
+      - type: has_one
+        target: TrueCostToOwn
+        via: modelYearId
+      - type: has_one
+        target: ExpertReview
+        via: make + model + year
+  - name: Trim
+    description: An equipment level within a model year.
+    relationships:
+      - type: belongs_to
+        target: ModelYear
+  - name: Style
+    description: >-
+      The specific version of a model — a trim plus a powertrain and body configuration.
+      Manufacturers define styles their own way and they are not comparable across models.
+    id: styleId
+    relationships:
+      - type: belongs_to
+        target: ModelYear
+        via: modelYearId
+      - type: has_one
+        target: EngineAndTransmission
+        via: styleId
+      - type: has_many
+        target: ColorAndOption
+        via: styleId
+      - type: has_many
+        target: Equipment
+        via: styleId
+      - type: has_one
+        target: TrueMarketValue
+        via: styleId
+  - name: ExpertReview
+    description: >-
+      The Edmunds editorial review for a make/model/year, returned by getExpertReview.
+    fields:
+      - vehicleReview.summary
+      - vehicleReview.overallRating
+      - vehicleReview.pros[]
+      - vehicleReview.cons[]
+      - scorecard.overall
+      - scorecard.driving
+      - scorecard.utility
+      - scorecard.technology
+      - scorecard.comfort
+      - scorecard.interior
+      - youTubeVideo
+      - allYouTubeVideos[]
+      - safety
+      - featuresSpecs.mostPopularStyleName
+      - featuresSpecs.manufacturersSuggestedRetailPrice
+      - featuresSpecs.milesPerGallonCityAndHighway
+      - featuresSpecs.seats
+      - featuresSpecs.transmission
+      - featuresSpecs.horsepower
+      - edmundsBackLink
+    source: openapi/_original/edmunds-cars-openapi.yaml
+    note: >-
+      The contract states that if only edmundsBackLink is returned, no review exists for
+      that vehicle — a sentinel an agent must check rather than treating the response as a
+      review.
+  - name: InventoryListing
+    description: A vehicle for sale at a dealership, returned by findInventory.
+    id: vin
+    fields:
+      - vin
+      - sellersComments
+      - inTransit
+      - dealerInfo.name
+      - computedDisplayInfo.prices.msrp
+      - computedDisplayInfo.prices.price
+      - computedDisplayInfo.prices.dealerPrice
+      - computedDisplayInfo.prices.edmundsSuggestedPrice
+      - computedDisplayInfo.prices.loanPaymentEstimate
+    relationships:
+      - type: belongs_to
+        target: Dealer
+        via: dealerInfo
+      - type: belongs_to
+        target: Style
+        via: make + model + year + trim
+    source: openapi/_original/edmunds-cars-openapi.yaml
+  - name: Dealer
+    description: A dealership, with ratings, reviews, details and location.
+    source: https://developer.edmunds.com/api-documentation/dealer/
+  - name: TrueMarketValue
+    description: >-
+      TMV — the average price a car sells for within a region. Perishable; the display date
+      must be shown alongside it.
+    keyed_by: styleId
+  - name: TrueCostToOwn
+    description: >-
+      TCO — the estimated five-year cost of buying and owning a vehicle at 15,000 miles a
+      year, including depreciation, financing interest, insurance, taxes and fees, fuel,
+      maintenance and repairs, net of any federal tax credit. Perishable.
+    keyed_by: modelYearId
+constraints:
+  source: https://developer.edmunds.com/api-documentation/overview/
+  rules:
+    - Data coverage begins at model year 1990; older vehicles, including VIN decoding, return errors.
+    - Coverage is vehicles sold to consumers in the United States only.
+    - Commercial-use vehicles are not comprehensively covered.
+display_obligations:
+  note: >-
+    TMV, TCO, visitor reviews and editorial articles all carry mandatory display, captioning
+    and attribution rules. See conventions/edmunds-conventions.yml and
+    https://developer.edmunds.com/special_requirements.html.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

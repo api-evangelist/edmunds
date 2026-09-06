@@ -1,15 +1,69 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/edmunds-openapi.yml
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://developer.edmunds.com/api-documentation/overview/ (URI Format),
+  https://developer.edmunds.com/dealership_api_program.html,
+  https://developer.edmunds.com/faq.html,
+  https://api.edmunds.com/.well-known/ai-plugin.json
+docs: https://developer.edmunds.com/api-documentation/overview/
 summary:
   types:
-  - apiKey
+    - apiKey
   api_key_in:
-  - query
+    - query
+  oauth2: false
+  openid_connect: false
+  mtls: false
+  self_serve_signup: false
 schemes:
-- name: ApiKeyAuth
-  type: apiKey
-  in: query
-  parameter: api_key
-  sources:
-  - openapi/edmunds-openapi.yml
+  - name: ApiKeyAuth
+    type: apiKey
+    in: query
+    parameter: api_key
+    required: true
+    applies_to: every documented Vehicle, Editorial, Dealer and Media API operation
+    sources:
+      - https://developer.edmunds.com/api-documentation/overview/
+      - openapi/edmunds-vehicle-api-openapi.yml
+    note: >-
+      Documented as part of the URI template itself —
+      {protocol}://api.edmunds.com/{endpoint}?fmt={format}&api_key={API key}. The
+      dealership program page repeats it: "It is important that every URL you construct
+      contains this key string otherwise no content will be returned." Because the
+      credential travels in the query string it is exposed to browser history, proxy logs
+      and Referer headers; Edmunds documents both http and https and only recommends https.
+  - name: AiPluginBearer
+    type: http
+    scheme: bearer
+    declared_in: https://api.edmunds.com/.well-known/ai-plugin.json
+    applies_to: the Edmunds Cars AI-plugin surface (/aiplugin/*)
+    note: >-
+      The plugin manifest declares auth.type "service_http" with authorization_type
+      "bearer". The OpenAPI that same manifest points at declares no securitySchemes and no
+      security requirement at all, so the two first-party documents disagree about how this
+      surface is authenticated. Recorded as published, not as verified — the surface could
+      not be exercised.
+key_issuance:
+  self_serve: false
+  status: closed
+  note: >-
+    Key issuance is closed. The open API program was retired effective 2018-02-15 and the
+    FAQ states Edmunds is "not currently accepting new applicants" and does "not expect to
+    be able to accommodate new applicants in the future." Keys are issued only to select
+    strategic partners, service providers, dealers and automotive advertisers, and are
+    requested through an Edmunds Account Executive rather than through any signup form.
+  cross_ref: lifecycle/edmunds-lifecycle.yml
+observed:
+  - url: https://api.edmunds.com/api/vehicle/v3/makes
+    status: 401
+    body_errorType: AUTHENTICATION_ERROR
+    body_message: Developer Inactive
+    checked: '2026-09-06'
+  - url: https://api.edmunds.com/aiplugin/curated-inventory/v1?zip=90401&pagenum=1&pagesize=3
+    status: 401
+    body_errorType: AUTHENTICATION_ERROR
+    body_message: Developer Inactive
+    checked: '2026-09-06'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

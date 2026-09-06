@@ -1,0 +1,115 @@
+# Edmunds
+
+> Edmunds is a US automotive research and shopping site — expert reviews, pricing, specs
+> and dealer inventory. Its data has been available programmatically since the early 2010s,
+> but the open developer program was retired effective 2018-02-15 and API keys are now
+> issued only to select strategic partners, service providers, dealers and automotive
+> advertisers through an Edmunds Account Executive.
+
+## Status you need to know first
+
+Every Edmunds API endpoint is live and every one of them returns HTTP 401 to a caller
+without a partner key, with the body
+`{"status":"FORBIDDEN","errorType":"AUTHENTICATION_ERROR","message":"Developer Inactive"}`.
+Note the mismatch Edmunds itself ships: the HTTP status is 401 while the envelope says
+FORBIDDEN. Read the status line. There is no signup, no free tier and no paid tier —
+Edmunds' own FAQ answers "Do you have a paid tier?" with "No, we do not have a
+fee-for-service model."
+
+- Docs: https://developer.edmunds.com/api-documentation/overview/
+- FAQ, including the retirement notice: https://developer.edmunds.com/faq.html
+- Dealer program: https://developer.edmunds.com/dealership_api_program.html
+- Terms: https://developer.edmunds.com/terms_of_service.html
+- Contact: https://developer.edmunds.com/contact_us.html
+
+## Contracts
+
+Edmunds serves exactly one machine-readable contract, discovered through its OpenAI plugin
+manifest rather than through its developer portal:
+
+- OpenAPI 3.0.1, "Edmunds Cars" — https://api.edmunds.com/openapi.yaml
+  Two operations: `getExpertReview`
+  (`GET /aiplugin/editorial/v3/makes/{make}/models/{model}/years/{year}/expertcontent`)
+  and `findInventory` (`GET /aiplugin/curated-inventory/v1`, 40 query facets).
+- Plugin manifest — https://api.edmunds.com/.well-known/ai-plugin.json
+
+The wider Vehicle, Editorial, Dealer and Media APIs are documented in prose only; Edmunds
+publishes no OpenAPI, no AsyncAPI, no GraphQL schema, no gRPC or SOAP contract and no MCP
+server for them.
+
+## APIs documented in prose
+
+- Vehicle API — makes, models, model years, styles, trims, engine and transmission,
+  colours and options, equipment, VIN and Squish VIN decoding, maintenance schedules,
+  recalls, safety, ratings and reviews, True Cost to Own (TCO) and True Market Value (TMV).
+  https://developer.edmunds.com/api-documentation/vehicle/
+- Editorial API — articles and expert content.
+  https://developer.edmunds.com/api-documentation/editorial/
+- Dealer API — dealership details, location, ratings and reviews.
+  https://developer.edmunds.com/api-documentation/dealer/
+- Media API — vehicle photos.
+  https://developer.edmunds.com/api-documentation/media/
+
+## How the API works
+
+- Base URL: `https://api.edmunds.com`
+- URI template: `{protocol}://api.edmunds.com/{endpoint}?fmt={json|xml}&api_key={key}`
+- Auth: an `api_key` query parameter on every request. The plugin manifest declares a
+  bearer scheme for the `/aiplugin/*` paths, which the OpenAPI it points at does not
+  declare — the two first-party documents disagree.
+- Every documented operation is a GET. There is no write surface, so idempotency, dry-run
+  and reversibility are all not applicable.
+- Format by query parameter (`fmt`), not Accept header. JSONP via `callback=`. CORS is
+  supported.
+- Pagination: `pageNum`/`pageSize` in the Vehicle docs, `pagenum`/`pagesize` in the plugin
+  contract, with `totalNumber` in the response.
+- Sparse fields: `fields=` comma-separated allow-list.
+- Versioning: a version segment per resource (v1, v2, v3, v5). No global version, no
+  version header.
+- Errors: `{status, errorType, message, moreInfoUrl}` as application/json. Documented
+  statuses are 400, 401, 403, 404, 502, 503, 504. 429 is not documented.
+- No rate limits, no RateLimit-*/Retry-After headers, no request-id header, no SLA and no
+  status page are published.
+
+## Data model
+
+Make -> Model -> Model Year -> Trim -> Style. Two Edmunds-generated integers are the join
+keys most endpoints require: the **Model Year ID** and the **Style ID**. Path and filter
+values are lower-case `niceName` slugs (`lexus`, `mercedes-benz`, `amg-gt`). Inventory
+listings key off 17-character VINs. Coverage is US consumer vehicles, model year 1990
+onward; commercial vehicles are not comprehensively covered.
+
+## Display obligations
+
+Unusually, Edmunds attaches binding display rules to the response payload itself — visitor
+reviews must be labelled as visitor-authored and shown unedited with username and date;
+editorial articles must be shown unedited with a canonical link, "From Edmunds.com" credit,
+copyright notice and a 30-day refresh; TMV and TCO must be captioned with the registered
+mark, shown with the date generated because the values are perishable, and carry the
+published explanation and legal notice. Treat these as part of the contract:
+https://developer.edmunds.com/special_requirements.html and
+https://developer.edmunds.com/api_branding_guide.html
+
+## SDKs
+
+Edmunds' docs name a JavaScript SDK and a Python SDK and link both to
+https://github.com/EdmundsAPI/ — both linked repositories now return 404. What survives:
+the Python SDK on PyPI as a single 2014 release (`edmunds` 0.1.4, published from
+api@edmunds.com) and `https://github.com/edmunds/edmunds-javascript-sdk`, last pushed 2011.
+Nothing Edmunds-owned was ever published to npm.
+
+## Agent surfaces
+
+- OpenAI plugin manifest: served, https://api.edmunds.com/.well-known/ai-plugin.json
+- MCP server: none. No hosted endpoint, no stdio package.
+- A2A agent card: none. `/.well-known/agent-card.json` and `/.well-known/agent.json` were
+  probed on every Edmunds host and none is served.
+- llms.txt: Edmunds publishes none. This file is generated by API Evangelist from the
+  provider's own documentation and from artifacts in
+  https://github.com/api-evangelist/edmunds.
+
+## Other
+
+- Tech blog: https://technology.edmunds.com/
+- GitHub: https://github.com/edmunds and https://github.com/EdmundsAPI
+- Generated 2026-09-06 by API Evangelist. Not published or endorsed by Edmunds.

@@ -1,0 +1,133 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://developer.edmunds.com/api-documentation/overview/,
+  https://developer.edmunds.com/api-documentation/vehicle/,
+  https://developer.edmunds.com/dealership_api_program.html,
+  https://developer.edmunds.com/special_requirements.html, and
+  openapi/_original/edmunds-cars-openapi.yaml
+provider: Edmunds
+providerId: edmunds
+summary: >-
+  A read-only, key-in-query REST API returning JSON. Every documented operation is a GET.
+  There is no write surface anywhere in the published contract or documentation, which
+  makes idempotency, dry-run and reversibility all not-applicable rather than absent.
+auth:
+  style: api-key-in-query
+  parameter: api_key
+  transport: query string on every request
+  uri_template: '{protocol}://api.edmunds.com/{endpoint}?fmt={response format}&api_key={API key}'
+  note: >-
+    The key is a URL parameter, so it lands in browser history, proxy logs and Referer
+    headers. Edmunds documents both http and https and only "recommends" https. The
+    separately-served AI-plugin manifest declares a different scheme for that surface —
+    service_http bearer — which the OpenAPI it points at does not declare at all.
+  docs: https://developer.edmunds.com/api-documentation/overview/
+  cross_ref: authentication/edmunds-authentication.yml
+content_negotiation:
+  parameter: fmt
+  values:
+    - json
+    - xml
+  default: json
+  note: >-
+    Format is selected by query parameter, not by Accept header. XML support is partial and
+    is called out per endpoint where it exists. JSONP is supported by adding callback= with
+    the name of a client-side handler function.
+  jsonp: true
+  cors:
+    supported: true
+    docs: https://developer.edmunds.com/api-documentation/overview/
+pagination:
+  style: page-number
+  params:
+    - name: pageNum
+      note: 1-based page index; also spelled pagenum on the AI-plugin inventory operation.
+    - name: pageSize
+      note: items per page; also spelled pagesize on the AI-plugin inventory operation.
+  response_fields:
+    - name: totalNumber
+      note: >-
+        Total match count, present on the curated-inventory response. The operation summary
+        instructs a consumer to always surface it.
+  note: >-
+    Casing is inconsistent between the two surfaces (pageNum/pageSize in the Vehicle docs,
+    pagenum/pagesize in the AI-plugin contract) and both are marked required on the
+    AI-plugin operation with prescribed defaults of 1 and 3.
+  docs: https://developer.edmunds.com/api-documentation/vehicle/
+sparse_fields:
+  supported: true
+  param: fields
+  note: >-
+    A comma-separated allow-list of response fields, shown in the Vehicle API quick-start
+    examples (fields=makeName,modelName,year,...). Not declared in either OpenAPI.
+  docs: https://developer.edmunds.com/api-documentation/vehicle/
+filtering:
+  style: query-parameters
+  note: >-
+    Filters are flat query parameters. The curated-inventory operation takes comma-separated
+    lists for most facets and range-or-list syntax for numeric ones (year, mileage,
+    displayPrice, loanPayment, leasePayment, combinedMPG). Several facets are documented as
+    case sensitive.
+sorting:
+  param: sortby
+  format: '{field}:{direction}, comma-separated, default direction ascending, case insensitive'
+  source: openapi/_original/edmunds-cars-openapi.yaml
+versioning:
+  style: per-resource path segment
+  cross_ref: lifecycle/edmunds-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  fields:
+    - status
+    - errorType
+    - message
+    - moreInfoUrl
+  rfc9457: false
+  cross_ref: errors/edmunds-problem-types.yml
+request_id:
+  supported: false
+  note: >-
+    No correlation or request-id header is documented, and none was returned on live
+    responses from api.edmunds.com. Tracing a failed call back to Edmunds support has no
+    published identifier.
+rate_limit_signaling:
+  headers_published: false
+  cross_ref: rate-limits/edmunds-rate-limits.yml
+  note: No RateLimit-*, X-RateLimit-* or Retry-After behaviour is documented.
+idempotency:
+  coverage: na
+  scope: []
+  note: >-
+    Not applicable. Every operation Edmunds documents or ships in a contract is a GET, so
+    there is no mutating surface for a replay-protection mechanism to cover. This is an
+    honest na, not a missing feature.
+dry_run_mode:
+  supported: na
+  note: Not applicable — read-only API, nothing to rehearse.
+reversibility:
+  applicable: false
+  grade: na
+  write_surfaces: []
+  note: >-
+    Not applicable. There is no write, no state change and therefore no reversal operation
+    and no reversal window to state. Edmunds publishes no cancel/refund/void/undo/restore
+    operation because it publishes no operation that creates or changes anything. Recorded
+    as na rather than zero so the read-only shape is visible rather than looking like an
+    omission.
+attribution_and_display:
+  note: >-
+    Unusually for a data API, Edmunds attaches binding display obligations to the response
+    payload itself, and an integrator must treat them as part of the contract. Visitor
+    ratings and reviews must be labelled as visitor-authored, may not be edited or
+    abridged, and must carry the submitting username and published date. Editorial articles
+    must be published unedited, carry a rel="canonical" link to the URL supplied in the
+    response, be credited "From Edmunds.com", carry the copyright notice, and be refreshed
+    at least every 30 days. TCO and TMV values must be captioned with the registered mark,
+    displayed with the date they were generated because the prices are perishable, and
+    accompanied by the published explanation and legal notice.
+  docs: https://developer.edmunds.com/special_requirements.html
+  branding_docs: https://developer.edmunds.com/api_branding_guide.html
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,88 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://developer.edmunds.com/faq.html, https://developer.edmunds.com/,
+  https://developer.edmunds.com/api-documentation/overview/,
+  https://developer.edmunds.com/dealership_api_program.html
+provider: Edmunds
+providerId: edmunds
+summary: >-
+  Edmunds retired its open API program. The provider's own FAQ states the program was
+  retired and that developer keys outside the partner tier were disabled effective
+  2018-02-15; it further states Edmunds is not accepting new applicants and does not
+  expect to in future. The API host is still up and the documentation is still published
+  and readable, but every unauthenticated call to api.edmunds.com now returns HTTP 401
+  with {"errorType":"AUTHENTICATION_ERROR","message":"Developer Inactive"}. Access today
+  is limited to select strategic partners, service providers, dealers and automotive
+  advertisers, brokered by an Edmunds Account Executive.
+status: retired-to-partners-only
+versioning:
+  style: path
+  note: >-
+    Each resource carries its own independent version segment in the path
+    (api/vehicle/v3/makes, api/vehicle/v2/{make}/models, api/editorial/v3/...,
+    api/media/v2/photos, api/dealer/v5/... alongside a still-documented v2). There is
+    no single global API version and no version header. The separately-served AI plugin
+    surface uses api/curated-inventory/v1 and info.version "v1".
+  observed_versions:
+    - v1
+    - v2
+    - v3
+    - v5
+  docs: https://developer.edmunds.com/api-documentation/overview/
+deprecation:
+  policy_published: true
+  policy_kind: program-retirement-notice
+  docs: https://developer.edmunds.com/faq.html
+  announced: '2018'
+  effective: '2018-02-15'
+  headers:
+    sunset: false
+    deprecation: false
+    note: >-
+      No RFC 8594 Sunset or Deprecation response headers are documented anywhere in the
+      developer portal, and none were observed on live 401 responses from api.edmunds.com.
+      The retirement was communicated as prose in the FAQ and by direct notice to key
+      holders, not as a machine-readable runtime signal.
+  statements:
+    - quote: >-
+        To refocus our engineering efforts and to better align ourselves with the evolving
+        needs of our car shoppers, dealers and automotive advertisers, we are retiring our
+        open API Program.
+      source: https://developer.edmunds.com/faq.html
+    - quote: >-
+        Unfortunately, if you are not already a strategic partner or service provider, your
+        API access will be disabled effective February 15, 2018.
+      source: https://developer.edmunds.com/faq.html
+    - quote: We're not currently accepting new applicants at this time.
+      source: https://developer.edmunds.com/faq.html
+    - quote: No, we do not expect to be able to accommodate new applicants in the future.
+      source: https://developer.edmunds.com/faq.html
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in either captured OpenAPI carries deprecated: true. The retirement applies
+  to the program and to key issuance, not to individually flagged operations.
+sla:
+  published: false
+  note: No service-level agreement is published on the developer portal.
+status_page:
+  published: false
+  probed:
+    - url: https://status.edmunds.com/
+      status: null
+      finding: >-
+        TLS handshake fails — the certificate presented has no subject alternative name
+        matching status.edmunds.com, i.e. no status host is provisioned.
+  note: >-
+    No status page is linked from the developer portal, the FAQ or the contact page, and
+    no conventional status hostname resolves to a status service.
+support:
+  contact: https://developer.edmunds.com/contact_us.html
+  partner_route: >-
+    Existing dealers and partners request access through their Edmunds Account Executive;
+    agencies building for a dealership must have the dealership request the key on their
+    behalf.
+  docs: https://developer.edmunds.com/faq.html
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,39 @@
+generated: '2026-09-06'
+method: generated
+source: >-
+  Grounded in openapi/_original/edmunds-cars-openapi.yaml — the contract harvested verbatim
+  from https://api.edmunds.com/openapi.yaml — plus conventions/, errors/ and lifecycle/.
+provider: Edmunds
+providerId: edmunds
+note: >-
+  Two skills, one per operation in the only contract Edmunds actually serves. Every
+  operationId referenced below appears in that harvested spec; nothing is invented. Both
+  skills open by telling the agent the surface is gated, because a 401 is the response any
+  caller without a partner key will get.
+skills:
+  - name: edmunds-vehicle-expert-review
+    file: edmunds-vehicle-expert-review.md
+    api: Edmunds Cars
+    operations:
+      - getExpertReview
+    description: >-
+      Retrieve the Edmunds editorial expert review for one vehicle by make, model and year,
+      handle the empty-review sentinel, and present it with the required attribution.
+  - name: edmunds-find-local-inventory
+    file: edmunds-find-local-inventory.md
+    api: Edmunds Cars
+    operations:
+      - findInventory
+    description: >-
+      Search new, used and CPO listings near a zip code, and report totalNumber, the Edmunds
+      Suggested Price and the per-VIN back link as the contract requires.
+not_covered:
+  note: >-
+    No skill was written for the Vehicle, Editorial, Dealer or Media APIs. Edmunds publishes
+    no contract for them, and the only spec in this repo covering them was generated from
+    documentation rather than served by Edmunds — grounding an agent skill in operationIds
+    we authored ourselves would teach an agent to call operations no provider document
+    names.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,76 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the Edmunds Cars API
+  version: 1.0.0
+extends: ../openapi/_original/edmunds-cars-openapi.yaml
+x-provenance:
+  generated: '2026-09-06'
+  method: generated
+  source: >-
+    Enhancements API Evangelist adds on top of the verbatim contract harvested from
+    https://api.edmunds.com/openapi.yaml. The harvested document is never mutated; every
+    change we make to it is expressed here.
+actions:
+  - target: $.info
+    description: >-
+      Record where this contract was fetched from, when, and that the surface it describes
+      is gated.
+    update:
+      x-api-evangelist:
+        harvested_from: https://api.edmunds.com/openapi.yaml
+        harvested: '2026-09-06'
+        http_status: 200
+        last_modified: '2023-07-26T16:39:11Z'
+        discovered_via: https://api.edmunds.com/.well-known/ai-plugin.json
+        access: >-
+          Gated. All operations return HTTP 401 with errorType AUTHENTICATION_ERROR and
+          message "Developer Inactive" without a partner-issued key. The open API program
+          was retired effective 2018-02-15.
+  - target: $.info
+    description: Add contact and licence-adjacent links the published document omits.
+    update:
+      contact:
+        name: Edmunds Big Data Engineering
+        email: bigdataeng@edmunds.com
+        url: https://developer.edmunds.com/contact_us.html
+      termsOfService: https://developer.edmunds.com/terms_of_service.html
+  - target: $.tags
+    description: >-
+      The published document declares no tags and leaves every operation untagged, so
+      generated navigation and per-tag splits have nothing to group on.
+    update:
+      - name: Cars
+        description: >-
+          Edmunds Cars AI-plugin surface — expert editorial reviews and curated local
+          vehicle inventory.
+  - target: $.paths[*][*]
+    description: Assign every operation to the Cars tag.
+    update:
+      tags:
+        - Cars
+  - target: $.components.schemas.findInventoryResponse
+    description: >-
+      Flag the schema defects in the published document rather than silently repairing
+      them: findInventoryResponse nests field definitions directly under an object node
+      instead of under properties, so the inventory array, VIN, dealer and price fields are
+      not reachable by a schema-aware client.
+    update:
+      x-api-evangelist-note: >-
+        As published, inventories declares type object and then places totalNumber and
+        results as siblings of type rather than inside properties. A validator sees an
+        object with no properties. The field intent is legible to a human reader and is
+        reproduced in data-model/edmunds-data-model.yml; the contract is not repaired here
+        because guessing the corrected shape would assert a payload we have never observed.
+  - target: $.paths['/aiplugin/curated-inventory/v1'].get.responses['200']
+    description: Record that no error responses are declared anywhere in the contract.
+    update:
+      x-api-evangelist-note: >-
+        Neither operation declares a single 4xx or 5xx response, though the provider
+        documents seven error statuses in prose and returns a fixed JSON envelope. See
+        errors/edmunds-problem-types.yml.
+  - target: $.paths['/aiplugin/editorial/v3/makes/{make}/models/{model}/years/{year}/expertcontent'].get.responses['200']
+    description: Surface the empty-result sentinel a consumer has to check for.
+    update:
+      x-api-evangelist-note: >-
+        A 200 does not mean a review exists. When only edmundsBackLink is populated, there
+        is no review for that vehicle.

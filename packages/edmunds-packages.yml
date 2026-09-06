@@ -1,0 +1,82 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://developer.edmunds.com/api-documentation/overview/#sec-9 (the "SDKs and Code
+  Samples" section), https://pypi.org/pypi/edmunds/json, https://registry.npmjs.org/edmunds,
+  and the GitHub orgs https://github.com/EdmundsAPI and https://github.com/edmunds
+provider: Edmunds
+providerId: edmunds
+note: >-
+  Edmunds' own documentation names exactly two first-party client libraries — a JavaScript
+  SDK and a Python SDK — and links both to https://github.com/EdmundsAPI/. Both of those
+  linked repositories now return HTTP 404: the EdmundsAPI organisation still exists but its
+  only surviving public repository is the API blog. The Python SDK survives on PyPI as a
+  single 2014 release published from api@edmunds.com; nothing was ever published to npm
+  under an Edmunds-owned name. This is the clearest decay signal in the record and it
+  matches the retirement of the open API program on 2018-02-15 (see lifecycle/).
+summary:
+  official_count: 2
+  registries_searched:
+    - npm
+    - PyPI
+    - Maven Central
+    - NuGet
+    - pkg.go.dev
+    - RubyGems
+    - Packagist
+    - crates.io
+  live_registry_artifacts: 1
+  dead_documentation_links: 2
+packages:
+  - name: edmunds
+    language: python
+    registry: pypi
+    official: true
+    url: https://pypi.org/project/edmunds/
+    version: 0.1.4
+    published: '2014-04-12'
+    repository: https://github.com/EdmundsAPI/sdk-python
+    repository_status: 404
+    documented_at: https://developer.edmunds.com/api-documentation/overview/#sec-9
+    note: >-
+      First-party: PyPI metadata lists author_email api@edmunds.com and home_page
+      github.com/EdmundsAPI/sdk-python, the repository Edmunds' own docs link to as
+      "our Python SDK". One release ever, 2014-04-12, and its summary states it wraps
+      the Python 2 era API. The linked repository is gone.
+  - name: edmunds-javascript-sdk
+    language: javascript
+    registry: null
+    official: true
+    url: https://github.com/edmunds/edmunds-javascript-sdk
+    version: null
+    published: '2011-09-14'
+    repository: https://github.com/edmunds/edmunds-javascript-sdk
+    repository_status: 200
+    documented_at: https://developer.edmunds.com/api-documentation/overview/#sec-9
+    note: >-
+      "The Edmunds' API JavaScript SDK", still public in the company's main GitHub org,
+      last pushed 2011-09-14. version is null because it was never published to npm under
+      any Edmunds-owned name — checked, nothing to record. The SDK the documentation
+      actually links to, github.com/EdmundsAPI/sdk-javascript, returns 404.
+absent:
+  - registry: npm
+    checked: 'https://registry.npmjs.org/edmunds, edmunds-api, edmunds-js, edmunds-sdk'
+    finding: >-
+      No Edmunds-owned package. registry.npmjs.org/edmunds exists as a name but every one
+      of its 13 versions (2017-2019) was unpublished on 2026-04-15 and it was an unrelated
+      Node application framework, not an Edmunds.com client.
+  - registry: maven-central
+    finding: no first-party artifact found
+  - registry: nuget
+    finding: no first-party artifact found
+  - registry: rubygems
+    finding: no first-party artifact found
+  - registry: packagist
+    finding: no first-party artifact found
+  - registry: crates.io
+    finding: no first-party artifact found
+  - registry: pkg.go.dev
+    finding: no first-party artifact found
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

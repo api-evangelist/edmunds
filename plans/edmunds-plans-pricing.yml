@@ -3,143 +3,51 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Edmunds
 providerId: edmunds
+generated: '2026-09-06'
+method: searched
+source: https://developer.edmunds.com/faq.html
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
+plan_count: 0
 tags:
   - Automobiles
   - Cars
   - Vehicles
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
-plans:
-  - id: edmunds-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Edmunds API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Edmunds Dealership API
-      - name: Edmunds API
-  - id: edmunds-pro
-    name: Professional
-    type: paid
-    description: Production tier for Edmunds. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Edmunds Dealership API
-      - name: Edmunds API
-  - id: edmunds-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Edmunds. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Edmunds Dealership API
-      - name: Edmunds API
+plans: []
+description: >-
+  Edmunds publishes no plans and no pricing, and says so explicitly. Its developer FAQ
+  answers the question "Do you have a paid tier?" with "No, we do not have a fee-for-service
+  model." The open API program was retired effective 2018-02-15 and access is now granted
+  only to select strategic partners, service providers, dealers and automotive advertisers,
+  brokered privately through an Edmunds Account Executive — there is no signup, no tier
+  list, no quota table and no published commercial terms of any kind. plan_count is 0 because
+  that is the measurement, not because the pricing page was not found.
+findings:
+  - question: Do you have a paid tier?
+    answer: No, we do not have a fee-for-service model.
+    source: https://developer.edmunds.com/faq.html
+  - question: How can I establish API access?
+    answer: We're not currently accepting new applicants at this time.
+    source: https://developer.edmunds.com/faq.html
+  - question: I'm an Edmunds dealer partner. How do I get access?
+    answer: >-
+      You should contact your Edmunds Account Executive and let them know you need API
+      access.
+    source: https://developer.edmunds.com/faq.html
+access_model: partner-negotiated
+probed:
+  - url: https://developer.edmunds.com/faq.html
+    status: 200
+  - url: https://developer.edmunds.com/
+    status: 200
+  - url: https://developer.edmunds.com/dealership_api_program.html
+    status: 200
+supersedes:
+  note: >-
+    This file replaces a 2026-05-04 bulk-sweep scaffold that asserted Free / Professional /
+    Enterprise tiers with 1,000 and 100,000 request monthly quotas. None of those tiers
+    existed; the provider's own FAQ contradicts them directly. The scaffold was
+    method: generated and is superseded here by method: searched.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

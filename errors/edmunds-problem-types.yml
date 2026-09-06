@@ -1,0 +1,93 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://developer.edmunds.com/api-documentation/overview/ ("Error Codes and Handling"),
+  corroborated by live 401 and 403 responses observed from https://api.edmunds.com on
+  2026-09-06
+provider: Edmunds
+providerId: edmunds
+format: vendor-json
+rfc9457: false
+note: >-
+  Edmunds does not use RFC 9457 / RFC 7807 problem+json. It publishes a single fixed
+  four-field JSON envelope, returned with content-type application/json, and documents the
+  HTTP statuses it uses. The envelope shape below is quoted verbatim from the provider's
+  own error reference and was confirmed byte-for-byte against a live response.
+envelope:
+  media_type: application/json
+  shape:
+    status: string
+    errorType: string
+    message: string
+    moreInfoUrl: string
+  published_example: |
+    {
+      "status": "http_status",
+      "errorType": "error_description",
+      "message": "some_message",
+      "moreInfoUrl": "http://developer.edmunds.com"
+    }
+  observed_example:
+    url: https://api.edmunds.com/api/vehicle/v3/makes
+    http_status: 401
+    body: |
+      {
+         "status":"FORBIDDEN",
+         "errorType":"AUTHENTICATION_ERROR",
+         "message": "Developer Inactive",
+         "moreInfoUrl":"http://developer.edmunds.com"
+      }
+    note: >-
+      Note the mismatch the provider itself ships: the HTTP status line is 401 while the
+      envelope's own status field reads FORBIDDEN. An agent must read the HTTP status, not
+      the body field.
+problem_types:
+  - status: 400
+    title: Bad Request
+    remediation: Check the URL to make sure it has proper syntax.
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - status: 401
+    title: Unauthorized
+    remediation: You are using the wrong API key or the key isn't active.
+    errorType_observed: AUTHENTICATION_ERROR
+    message_observed: Developer Inactive
+    note: >-
+      This is the status every caller without a partner key receives today, on every path
+      including the AI-plugin operations, because the open program was retired (lifecycle/).
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - status: 403
+    title: Forbidden
+    remediation: You are not authorized to access this resource.
+    note: >-
+      Also returned by the api.edmunds.com edge for unrouted paths, as {"message":"Forbidden"}
+      — a different, one-field envelope from the documented four-field one.
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - status: 404
+    title: Not Found
+    remediation: Check the URL path for typos.
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - status: 502
+    title: Bad Gateway
+    remediation: Transient upstream failure; retry with backoff, then contact support if it persists.
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - status: 503
+    title: Service Unavailable
+    remediation: Transient; retry with backoff, then contact support if it persists.
+    source: https://developer.edmunds.com/api-documentation/overview/
+  - status: 504
+    title: Gateway Timeout
+    remediation: Transient; retry with backoff, then contact support if it persists.
+    source: https://developer.edmunds.com/api-documentation/overview/
+not_documented:
+  - status: 429
+    note: >-
+      No 429 / rate-limit-exhaustion status is documented anywhere in the error reference,
+      and no rate limits are published. See rate-limits/edmunds-rate-limits.yml.
+derived_from_openapi:
+  note: >-
+    Neither captured OpenAPI declares a single 4xx or 5xx response — both document only
+    "200 OK". Every entry above therefore comes from the prose error reference and from
+    live observation, not from the contract.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
