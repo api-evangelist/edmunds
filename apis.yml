@@ -44,33 +44,16 @@ apis:
     url: overlays/edmunds-vehicle-api-overlay.yaml
   - type: Documentation
     url: https://developer.edmunds.com/api-documentation/vehicle/
-- aid: edmunds:edmunds-cars-api
-  name: Edmunds Cars API
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  description: >-
-    The only machine-readable contract Edmunds serves. An OpenAPI 3.0.1 document published
-    at https://api.edmunds.com/openapi.yaml and pointed at by Edmunds' own OpenAI plugin
-    manifest at /.well-known/ai-plugin.json. Two read operations: getExpertReview returns
-    the Edmunds editorial review, scorecard, pros and cons, safety and features for a
-    make/model/year; findInventory returns curated new, used and CPO listings near a US zip
-    code across roughly forty filter facets, with an Edmunds Suggested Price on each result.
-    Both operations return HTTP 401 "Developer Inactive" without a partner-issued key.
-  humanURL: https://developer.edmunds.com/api-documentation/overview/
+- aid: edmunds:edmunds-aiplugin-api
+  name: Edmunds Aiplugin API
+  description: The Aiplugin API from Edmunds — 2 operation(s) for aiplugin.
+  humanURL: https://developer.edmunds.com/dealership_api_program.html
   baseURL: https://api.edmunds.com
   tags:
-  - Cars
-  - Vehicles
-  - Reviews
-  - Inventory
+  - Aiplugin
   properties:
   - type: OpenAPI
-    url: openapi/edmunds-cars-openapi.yml
-  - type: OpenAPI
-    url: openapi/_original/edmunds-cars-openapi.yaml
-  - type: Overlay
-    url: overlays/edmunds-cars-overlay.yaml
-  - type: MCPServer
-    url: mcp/edmunds-mcp.yml
+    url: openapi/edmunds-aiplugin-api-openapi.yml
   - type: DataModel
     url: data-model/edmunds-data-model.yml
   - type: ErrorCatalog
@@ -127,6 +110,10 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.23'
 common:
+  - type: Overlay
+    url: overlays/edmunds-cars-overlay.yaml
+  - type: MCPServer
+    url: mcp/edmunds-mcp.yml
   - type: Website
     url: https://www.edmunds.com/
   - type: AgenticAccess
