@@ -36,6 +36,8 @@ apis:
   humanURL: https://developer.edmunds.com/api-documentation/vehicle/
   baseURL: https://api.edmunds.com
   tags:
+  - Vehicles
+  tags_raw:
   - Vehicle
   properties:
   - type: OpenAPI
@@ -50,6 +52,8 @@ apis:
   humanURL: https://developer.edmunds.com/dealership_api_program.html
   baseURL: https://api.edmunds.com
   tags:
+  - AI Plugin
+  tags_raw:
   - Aiplugin
   properties:
   - type: OpenAPI
@@ -62,6 +66,15 @@ apis:
     url: https://developer.edmunds.com/api-documentation/overview/
 name: Edmunds
 tags:
+  - Automobiles
+  - Cars
+  - Vehicles
+  - Vehicle Data
+  - Dealership
+  - Reviews
+  - Pricing
+  - Automotive
+tags_raw:
   - Automobiles
   - Cars
   - Vehicles
