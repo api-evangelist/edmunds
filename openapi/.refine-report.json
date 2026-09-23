@@ -1,17 +1,30 @@
 {
   "provider": "edmunds",
   "sources": [
-    "edmunds-vehicle-api-openapi.yml"
+    "_original/edmunds-cars-openapi.yaml",
+    "_ae-authored/edmunds-openapi.yml"
   ],
   "outputs": [
+    "edmunds-aiplugin-api-openapi.yml",
     "edmunds-vehicle-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "edmunds-vehicle-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "edmunds-cars-openapi.yaml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "edmunds-cars-openapi.yaml: tagged paths GET /aiplugin/editorial/v3/makes/{make}/models/{model}/years/{year}/expertcontent -> Aiplugin",
+    "edmunds-cars-openapi.yaml: tagged paths GET /aiplugin/curated-inventory/v1 -> Aiplugin",
+    "edmunds-cars-openapi.yaml: declared missing tag: Aiplugin",
+    "edmunds-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "edmunds-openapi.yml: declared missing tag: Vehicle",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/edmunds-cars-openapi.yml: archived document superseded by a larger archived document",
+    "edmunds-aiplugin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "edmunds-vehicle-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

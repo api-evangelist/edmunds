@@ -1,23 +1,17 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Edmunds Cars
+  title: Edmunds Cars Aiplugin API
   description: Use Edmunds to get trusted car reviews and local new and used vehicle listings.
   version: v1
-  x-provenance:
-    method: harvested
-    source: https://api.edmunds.com/openapi.yaml
-    http_status: 200
-    last_modified: '2023-07-26T16:39:11Z'
-    note: Verbatim copy at openapi/_original/edmunds-cars-openapi.yaml. This refined copy only normalises
-      two non-OpenAPI type keywords ("int" -> integer, "double" -> number/double) that appear in the published
-      document. No operations, paths or parameters were added.
 servers:
 - url: https://api.edmunds.com
+tags:
+- name: Aiplugin
 paths:
   /aiplugin/editorial/v3/makes/{make}/models/{model}/years/{year}/expertcontent:
     get:
       operationId: getExpertReview
-      summary: Get edmunds expert reviews for vehicle by make,model and year.
+      summary: Get edmunds expert reviews for vehicle by make,model and year
       parameters:
       - in: path
         name: make
@@ -34,8 +28,7 @@ paths:
       - in: path
         name: year
         schema:
-          type: integer
-          format: int32
+          type: int
         required: true
         description: the year of the vehicle. From 1990 - current year.
       responses:
@@ -46,13 +39,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/getExpertReviewResponse'
       tags:
-      - Cars
+      - Aiplugin
   /aiplugin/curated-inventory/v1:
     get:
       operationId: findInventory
-      summary: Given a zipcode, allows user to look for vehicles given search criteria. Not an exhaustive
-        search. Always mention the totalNumber of results found. Please return edmunds urls as part of
-        response https://edmunds.com/{make}/{model}/{year}/vin/{vin}/.
+      summary: Given a zipcode, allows user to look for vehicles given search criteria.
       parameters:
       - name: zip
         in: query
@@ -65,8 +56,7 @@ paths:
         required: false
         schema:
           type: integer
-        description: The **radius** parameter defines an area of a search in a radius (in miles) according
-          to a geographic center of the defined region.
+        description: The **radius** parameter defines an area of a search in a radius (in miles) according to a geographic center of the defined region.
       - name: inventoryType
         in: query
         required: false
@@ -90,8 +80,7 @@ paths:
         required: false
         schema:
           type: string
-        description: Vehicle years. Range value or comma-separated list of positive integer numbers. Each
-          year should be in range [1990, 2099].
+        description: Vehicle years. Range value or comma-separated list of positive integer numbers. Each year should be in range [1990, 2099].
       - name: mileage
         in: query
         required: false
@@ -121,26 +110,19 @@ paths:
         required: false
         schema:
           type: string
-        description: Comma-separated list of body types. Possible values are SUV, Pickup, Sedan, Hatchback,
-          Coupe, Minivan, Full Size Van, Convertible, Station Wagon.
+        description: Comma-separated list of body types. Possible values are SUV, Pickup, Sedan, Hatchback, Coupe, Minivan, Full Size Van, Convertible, Station Wagon.
       - name: exteriorColor
         in: query
         required: false
         schema:
           type: string
-        description: Comma-separated list of generic or OEM exterior colors. Case sensitive. Possible
-          values are "Black", "Gray", "Off White/Cream", "Light Brown", "Dark Brown", "Red", "Dark Red",
-          "Dark Blue", "Dark Green", "White", "Orange", "Other", "Silver", "Light Blue", "Light Green",
-          "Yellow", "Purple", "Gold".
+        description: Comma-separated list of generic or OEM exterior colors. Case sensitive. Possible values are "Black", "Gray", "Off White/Cream", "Light Brown", "Dark Brown", "Red", "Dark Red", "Dark Blue", "Dark Green", "White", "Orange", "Other", "Silver", "Light Blue", "Light Green", "Yellow", "Purple", "Gold".
       - name: interiorColor
         in: query
         required: false
         schema:
           type: string
-        description: Comma-separated list of generic or OEM interior colors. Case sensitive. Possible
-          values are "Black", "Gray", "Off White/Cream", "Light Brown", "Dark Brown", "Red", "Dark Red",
-          "Dark Blue", "Dark Green", "White", "Orange", "Other", "Silver", "Light Blue", "Light Green",
-          "Yellow", "Purple", "Gold".
+        description: Comma-separated list of generic or OEM interior colors. Case sensitive. Possible values are "Black", "Gray", "Off White/Cream", "Light Brown", "Dark Brown", "Red", "Dark Red", "Dark Blue", "Dark Green", "White", "Orange", "Other", "Silver", "Light Blue", "Light Green", "Yellow", "Purple", "Gold".
       - name: option
         in: query
         required: false
@@ -159,9 +141,7 @@ paths:
         required: false
         schema:
           type: string
-        description: Comma-separated list of engine types. Case sensitive. Possible values are "gas",
-          "mild hybrid", "hybrid", "flex-fuel (FFV)", "electric", "diesel", "plug-in hybrid", "natural
-          gas (CNG)".
+        description: Comma-separated list of engine types. Case sensitive. Possible values are "gas", "mild hybrid", "hybrid", "flex-fuel (FFV)", "electric", "diesel", "plug-in hybrid", "natural gas (CNG)".
       - name: cylinders
         in: query
         required: false
@@ -173,29 +153,25 @@ paths:
         required: false
         schema:
           type: string
-        description: Comma-separated list of transmissions. Possible values are AUTOMATED_MANUAL, DIRECT_DRIVE,
-          AUTOMATIC, MANUAL.
+        description: Comma-separated list of transmissions. Possible values are AUTOMATED_MANUAL, DIRECT_DRIVE, AUTOMATIC, MANUAL.
       - name: driveTrain
         in: query
         required: false
         schema:
           type: string
-        description: Comma-separated list of driveTrains. Case sensitive. Possible values are "all wheel
-          drive", "front wheel drive", "four wheel drive", "rear wheel drive".
+        description: Comma-separated list of driveTrains. Case sensitive. Possible values are "all wheel drive", "front wheel drive", "four wheel drive", "rear wheel drive".
       - name: historyInfo
         in: query
         required: false
         schema:
           type: string
-        description: Comma-separated list of vehicle history indicators. Possible values are freeHistoryReport,
-          isOneOwner, noAccidents, personalUseOnly, cleanTitle.
+        description: Comma-separated list of vehicle history indicators. Possible values are freeHistoryReport, isOneOwner, noAccidents, personalUseOnly, cleanTitle.
       - name: dealType
         in: query
         required: false
         schema:
           type: string
-        description: Comma-separated list of how good of a deal edmunds thinks this price is. Possible
-          values are Great, Good, Fair.
+        description: Comma-separated list of how good of a deal edmunds thinks this price is. Possible values are Great, Good, Fair.
       - name: displayPrice
         in: query
         required: false
@@ -213,8 +189,7 @@ paths:
         required: false
         schema:
           type: string
-        description: Lease monthly payment. Range value or comma-separated list of Lease monthly payment.
-          Range value or comma-separated list of values.
+        description: Lease monthly payment. Range value or comma-separated list of Lease monthly payment. Range value or comma-separated list of values.
       - name: paymentType
         in: query
         required: false
@@ -244,15 +219,13 @@ paths:
         required: false
         schema:
           type: string
-        description: Comma-separated list of rear wheels for pickup trucks. Case sensitive. Possible values
-          are "dual rear wheels".
+        description: Comma-separated list of rear wheels for pickup trucks. Case sensitive. Possible values are "dual rear wheels".
       - name: truckCabSize
         in: query
         required: false
         schema:
           type: string
-        description: Comma-separated list of truck cab styles. Possible values are "Crew Cab Pickup",
-          "Extended Cab Pickup", "Regular Cab Pickup".
+        description: Comma-separated list of truck cab styles. Possible values are "Crew Cab Pickup", "Extended Cab Pickup", "Regular Cab Pickup".
       - name: displacement
         in: query
         required: false
@@ -264,8 +237,7 @@ paths:
         required: false
         schema:
           type: string
-        description: Comma-separated list of Comfort & Convenience vehicle features. Possible values are
-          cgf_leather_seats,cgf_heated_seats,cgf_keyless_entry_start,cgf_adaptive_cruise_control,cgf_remote_start,cgf_navigation,cgf_2nd_row_bucket_seats,cgf_audio_and_cruise_controls_on_steering_wheel,gf_heated_steering_wheel,cgf_cooled_seats,cgf_power_driver_seat.
+        description: Comma-separated list of Comfort & Convenience vehicle features. Possible values are cgf_leather_seats,cgf_heated_seats,cgf_keyless_entry_start,cgf_adaptive_cruise_control,cgf_remote_start,cgf_navigation,cgf_2nd_row_bucket_seats,cgf_audio_and_cruise_controls_on_steering_wheel,gf_heated_steering_wheel,cgf_cooled_seats,cgf_power_driver_seat.
       - name: safety
         in: query
         required: false
@@ -314,7 +286,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/findInventoryResponse'
       tags:
-      - Cars
+      - Aiplugin
 components:
   schemas:
     findInventoryResponse:
@@ -323,9 +295,8 @@ components:
         inventories:
           type: object
           totalNumber:
-            type: integer
+            type: int
             description: the total number of results found.
-            format: int32
           results:
             type: array
             items:
@@ -349,26 +320,20 @@ components:
                 prices:
                   type: object
                   msrp:
-                    type: number
+                    type: double
                     description: the msrp of the vehicle.
-                    format: double
                   price:
-                    type: number
+                    type: double
                     description: the actual display price of the vehicle.
-                    format: double
                   dealerPrice:
-                    type: number
+                    type: double
                     description: the price that the dealer is asking for.
-                    format: double
                   edmundsSuggestedPrice:
-                    type: number
-                    description: the price that edmunds.com believes you should pay. Always reference
-                      this as "Edmunds Suggested Price".
-                    format: double
+                    type: double
+                    description: the price that edmunds.com believes you should pay. Always reference this as "Edmunds Suggested Price".
                   loanPaymentEstimate:
-                    type: number
+                    type: double
                     description: the monthly loan pay estimate.
-                    format: double
     getExpertReviewResponse:
       type: object
       properties:
@@ -437,8 +402,4 @@ components:
               type: string
         edmundsBackLink:
           type: string
-          description: This is the link back to edmunds.com for this content. If only this link is returned,
-            this means there is no review.
-tags:
-- name: Cars
-  description: 'Edmunds Cars AI-plugin surface: expert reviews and curated local inventory.'
+          description: This is the link back to edmunds.com for this content. If only this link is returned, this means there is no review.

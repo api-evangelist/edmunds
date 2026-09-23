@@ -6,14 +6,6 @@ info:
   contact:
     name: Edmunds Developer Network
     url: https://developer.edmunds.com/
-  x-generated-from: documentation
-  x-authored-by: API Evangelist
-  x-authored-note: >-
-    Split by tag from openapi/_ae-authored/edmunds-openapi.yml, which API Evangelist wrote
-    from the Edmunds developer portal. Edmunds serves no OpenAPI for the Vehicle API. The
-    only contract Edmunds does serve is openapi/_original/edmunds-cars-openapi.yaml,
-    harvested from https://api.edmunds.com/openapi.yaml. Enhancements are recorded in
-    overlays/edmunds-vehicle-api-overlay.yaml.
 servers:
 - url: https://api.edmunds.com
   description: Production
@@ -153,3 +145,6 @@ components:
       type: apiKey
       in: query
       name: api_key
+x-generated-from: documentation
+x-authored-by: API Evangelist
+x-authored-note: Edmunds publishes no OpenAPI for its Vehicle API. This document was written from the Edmunds developer portal — the endpoint tables and worked examples at https://developer.edmunds.com/api-documentation/overview/ and https://developer.edmunds.com/api-documentation/vehicle/ — and the repository history records it as "a best-effort OpenAPI 3.1 spec generated from documentation". It sat in openapi/_original/ until 2026-09-06, where its location asserted that Edmunds had served it. Edmunds did not. It covers 5 of roughly 20 documented Vehicle API resources and none of the Editorial, Dealer or Media APIs. The one contract Edmunds does serve is openapi/_original/edmunds-cars-openapi.yaml, harvested from https://api.edmunds.com/openapi.yaml.
