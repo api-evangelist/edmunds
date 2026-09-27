@@ -289,51 +289,6 @@ paths:
       - Aiplugin
 components:
   schemas:
-    findInventoryResponse:
-      type: object
-      properties:
-        inventories:
-          type: object
-          totalNumber:
-            type: int
-            description: the total number of results found.
-          results:
-            type: array
-            items:
-              type: object
-              vin:
-                type: string
-                description: the vin of the vehicle.
-              sellersComments:
-                type: string
-                description: a truncated description of the vehicle from the seller.
-              inTransit:
-                type: boolean
-                description: whether this vehicle is currently being shipped to location.
-              dealerInfo:
-                type: object
-                name:
-                  type: string
-                  description: the name of the dealership.
-              computedDisplayInfo:
-                type: object
-                prices:
-                  type: object
-                  msrp:
-                    type: double
-                    description: the msrp of the vehicle.
-                  price:
-                    type: double
-                    description: the actual display price of the vehicle.
-                  dealerPrice:
-                    type: double
-                    description: the price that the dealer is asking for.
-                  edmundsSuggestedPrice:
-                    type: double
-                    description: the price that edmunds.com believes you should pay. Always reference this as "Edmunds Suggested Price".
-                  loanPaymentEstimate:
-                    type: double
-                    description: the monthly loan pay estimate.
     getExpertReviewResponse:
       type: object
       properties:
@@ -403,3 +358,48 @@ components:
         edmundsBackLink:
           type: string
           description: This is the link back to edmunds.com for this content. If only this link is returned, this means there is no review.
+    findInventoryResponse:
+      type: object
+      properties:
+        inventories:
+          type: object
+          totalNumber:
+            type: int
+            description: the total number of results found.
+          results:
+            type: array
+            items:
+              type: object
+              vin:
+                type: string
+                description: the vin of the vehicle.
+              sellersComments:
+                type: string
+                description: a truncated description of the vehicle from the seller.
+              inTransit:
+                type: boolean
+                description: whether this vehicle is currently being shipped to location.
+              dealerInfo:
+                type: object
+                name:
+                  type: string
+                  description: the name of the dealership.
+              computedDisplayInfo:
+                type: object
+                prices:
+                  type: object
+                  msrp:
+                    type: double
+                    description: the msrp of the vehicle.
+                  price:
+                    type: double
+                    description: the actual display price of the vehicle.
+                  dealerPrice:
+                    type: double
+                    description: the price that the dealer is asking for.
+                  edmundsSuggestedPrice:
+                    type: double
+                    description: the price that edmunds.com believes you should pay. Always reference this as "Edmunds Suggested Price".
+                  loanPaymentEstimate:
+                    type: double
+                    description: the monthly loan pay estimate.
