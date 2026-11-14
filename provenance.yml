@@ -8,6 +8,12 @@ artifacts:
   authentication/edmunds-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   collections/edmunds-vehicle-api.opencollection.json:
     method: derived
     evidence: openapi/edmunds-vehicle-api
@@ -26,8 +32,14 @@ artifacts:
   conventions/edmunds-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/edmunds-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/edmunds-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/edmunds-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/edmunds-problem-types.yml:
     method: searched
@@ -44,10 +56,103 @@ artifacts:
   heartbeat/2026-11-06.yml:
     method: unknown
     evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
+    method: unknown
+    evidence: no authorship recorded
+  hosts/edmunds-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/edmunds-integration-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  json-ld/edmunds-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/edmunds-find-inventory-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/edmunds-get-expert-review-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T062655.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -113,6 +218,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/edmunds-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -128,6 +236,10 @@ artifacts:
   openapi/_original/edmunds-cars-openapi.yml:
     method: harvested
     evidence: declared in the artifact
+  openapi/_original/edmunds-openapi.yml:
+    method: harvested
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/edmunds-aiplugin-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -164,8 +276,20 @@ artifacts:
   skills/edmunds-find-local-inventory.md:
     method: generated
     evidence: declared in the artifact
+  skills/edmunds-get_expert_review.md:
+    method: unknown
+    evidence: no authorship recorded
   skills/edmunds-vehicle-expert-review.md:
     method: generated
+    evidence: declared in the artifact
+  terms/edmunds-terms-of-service.yml:
+    method: harvested
+    evidence: declared in the artifact
+  vendors/edmunds-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/edmunds-vocabulary.yml:
+    method: derived
     evidence: declared in the artifact
   well-known/edmunds-ai-plugin.json:
     method: unknown
