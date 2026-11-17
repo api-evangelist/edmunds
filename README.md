@@ -64,7 +64,7 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Edmunds is a popular automotive resource website that provides consumers with valuable information and tools to help them make informed decisions about buying and selling cars. They offer expert reviews, comparison tools, price guides, and a variety of resources to help users research and find the perfect vehicle for their needs.
+Edmunds is a leading automotive data and technology platform that offers comprehensive vehicle information, expert reviews, pricing guides, and tools for consumers and partners. Through its developer portal, Edmunds provides APIs that deliver detailed specifications, editorial content, true market value (TMV), and total cost of ownership (TCO) data for millions of vehicles. The platform supports dealership integrations, market analysis, and consumer applications, emphasizing accurate, up-to-date automotive data and a partner‑focused API program.
 
 **Areas:** Automobiles · Cars · Vehicles · Vehicle Data · Dealership · Reviews · Pricing · Automotive
 
@@ -95,6 +95,19 @@ Which operations an agent can call, which act, and which need a human in the loo
 
 - [Edmunds Agentic Access](https://apis.io/agentic-access/edmunds/edmunds-agentic-access/)
 
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [findInventoryResponse](https://apis.io/schemas/edmunds/edmunds-find-inventory-response/)
+- [getExpertReviewResponse](https://apis.io/schemas/edmunds/edmunds-get-expert-review-response/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Edmunds Context](https://apis.io/jsonld/edmunds/edmunds-context/)
+
 #### Collections (2)
 
 Postman and Open Collection request collections.
@@ -108,6 +121,12 @@ OpenAPI overlays, including conversational phrasing for each operation.
 
 - [Edmunds Cars Overlay](https://apis.io/overlays/edmunds/edmunds-cars-overlay/)
 - [Edmunds Vehicle Api Overlay](https://apis.io/overlays/edmunds/edmunds-vehicle-api-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Edmunds API Rules](https://apis.io/rules/edmunds/edmunds-rules/)
 
 #### Security (2)
 
@@ -148,18 +167,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 28.7** — thin · rubric 0.24.0 · scored 2026-10-17
+**Kin Score 28.1** — thin · rubric 0.25.0 · scored 2026-10-23
 
 | Facet | Score |
 |---|---|
-| Discoverability | 78.6 |
+| Discoverability | 73.2 |
 | Contract quality | 20.6 |
 | Contract governance | 4.5 |
 | Operational transparency | 10.5 |
 | Developer ergonomics | 54.2 |
 | Access clarity | 10.5 |
 
-**Agent readiness 27.3** — agent-aware
+**Agent readiness 29.1** — agent-ready
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -182,6 +201,8 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Protected Resource Metadata | — |
 | Dynamic Client Registration | — |
 | Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
 
 **Regulatory alignment 20.6** — Horizontal (data, software, accessibility, platform)
 
